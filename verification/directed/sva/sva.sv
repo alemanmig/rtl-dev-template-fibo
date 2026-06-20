@@ -14,7 +14,7 @@
 // Instantiated via bind in tb.sv inside the DUT scope, giving direct
 // visibility of both ports and internal state registers (a_q, b_q).
 //
-// Assertion map
+// Assertion map 
 // ─────────────────────────────────────────────────────────────────────────────
 //  ID            | Requirement | Type    | Description
 // ───────────────┼─────────────┼─────────┼─────────────────────────────────────

@@ -18,7 +18,7 @@
 // vif.enable_i, vif.fib_out_o) match the DUT ports exactly, following the
 // lowRISC Verilog Coding Style Guide's _i/_o/_ni suffix convention.
 //
-// Test cases executed (in order):
+// Test cases executed (in order): 
 //   TC-RST-01 — Async reset from arbitrary state
 //   TC-RST-02 — Reset independent of enable
 //   TC-RST-03 — Correct sequence after reset release

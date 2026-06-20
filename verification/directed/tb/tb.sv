@@ -18,7 +18,7 @@
 // Port/signal names match the DUT exactly (clk_i, rst_ni, enable_i,
 // fib_out_o), following the lowRISC Verilog Coding Style Guide's _i/_o/_ni
 // suffix convention — per rtl/fibonacci.sv.
-//
+// 
 // -----------------------------------------------------------------------------
 
 module tb;

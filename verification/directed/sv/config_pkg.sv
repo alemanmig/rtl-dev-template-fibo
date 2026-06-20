@@ -25,7 +25,7 @@ package config_pkg;
   // DUT data width (must match parameter W in fib_gen instantiation).
   parameter int unsigned FibW = 32;
 
-  // Clock frequency and derived period.
+  // Clock frequency and derived period. 
   parameter int unsigned ClkFreqHz   = 100_000_000; // 100 MHz
   parameter int unsigned ClkPeriodNs = 10;          // 10 ns
 
