@@ -38,12 +38,19 @@ UVCS_FILELIST           ?=
 # We use the shared lib (libdpi.so) instead, loaded at run time below.
 DPI_FILE                ?=
 
-# -sv_lib / -sv_root load the shared lib built by `make build-dpi`
-# (verification/common/dpi/lib/libdpi.so). These are simv RUN-TIME options —
-# vcs silently rejects them at compile time ("Unknown option ... ignoring"),
-# then chokes trying to parse the next token as a source file. They must be
+# -sv_lib loads the shared lib built by `make build-dpi`
+# (verification/common/dpi/lib/libdpi.so). This is a simv RUN-TIME option —
+# vcs silently rejects it at compile time ("Unknown option ... ignoring"),
+# then chokes trying to parse the next token as a source file. It must be
 # appended to SIMV_FLAGS (see below, after common.mk is included), not DPI_FILE.
-DPI_RUN_FLAGS           ?= -sv_lib dpi -sv_root $(GIT_DIR)/verification/common/dpi/lib
+#
+# -sv_lib takes a path WITHOUT the .so suffix; it does NOT auto-prepend "lib"
+# (confirmed: `-sv_lib dpi -sv_root <dir>` made simv look for literal
+# "./dpi.so" in the CWD, not "<dir>/libdpi.so" — -sv_root was not honored for
+# a bare name with no path component). Passing the full absolute path
+# including the "lib" prefix sidesteps both problems: no -sv_root needed, no
+# relative-path/CWD ambiguity at run time.
+DPI_RUN_FLAGS           ?= -sv_lib $(GIT_DIR)/verification/common/dpi/lib/libdpi
 
 # ---------------------------------- RUN-TIME ----------------------------------
 
