@@ -34,10 +34,16 @@ ENABLE_CODE_COV_COMPILE ?= true
 CODE_COV_TYPES_COMPILE  ?= line+cond+tgl+assert
 ENABLE_SVA_COMPILE      ?= true
 UVCS_FILELIST           ?=
-# Auto-link the shared lib built by `make build-dpi` (verification/common/dpi/lib/libdpi.so).
-# -sv_lib drops the lib/.so around DPI_LIB_NAME; -sv_root is the search dir.
-# Compile-time only: VCS bakes this into simv2, so no flag is needed again at run time.
-DPI_FILE                ?= -sv_lib dpi -sv_root $(GIT_DIR)/verification/common/dpi/lib
+# DPI_FILE is only for .cpp/.o DPI sources linked statically at vcs compile time.
+# We use the shared lib (libdpi.so) instead, loaded at run time below.
+DPI_FILE                ?=
+
+# -sv_lib / -sv_root load the shared lib built by `make build-dpi`
+# (verification/common/dpi/lib/libdpi.so). These are simv RUN-TIME options —
+# vcs silently rejects them at compile time ("Unknown option ... ignoring"),
+# then chokes trying to parse the next token as a source file. They must be
+# appended to SIMV_FLAGS (see below, after common.mk is included), not DPI_FILE.
+DPI_RUN_FLAGS           ?= -sv_lib dpi -sv_root $(GIT_DIR)/verification/common/dpi/lib
 
 # ---------------------------------- RUN-TIME ----------------------------------
 
@@ -77,6 +83,10 @@ endif
 
 # Main framework
 include $(COMMON_MK_DIR)/common.mk
+
+# Append the DPI shared-lib load flags onto the simv run-time command line
+# (must come after common.mk, since that's where SIMV_FLAGS is first defined).
+SIMV_FLAGS += $(DPI_RUN_FLAGS)
 
 # DPI
 -include $(COMMON_MK_DIR)/dpi.mk
