@@ -61,10 +61,10 @@ module fcover #(
     cp_enable_rst : cross cp_enable, cp_rst;
 
     cp_fib_out : coverpoint fib_out_o {
-      bins zero     = {0};
-      bins small    = {[1:15]};
-      bins medium   = {[16:127]};
-      bins large    = default;
+      bins zero    = {0};
+      bins smal    = {[1:15]};
+      bins mediu   = {[16:127]};
+      bins larg    = default;
     }
 
     cp_en_edge : coverpoint enable_i {
